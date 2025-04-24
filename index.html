@@ -43,7 +43,7 @@
     .slide {
       display: none;
     }
-    /* Active slide becomes visible & centered */
+    /* Active slide */
     #slide1:checked ~ .video-slider-wrapper .slide1,
     #slide2:checked ~ .video-slider-wrapper .slide2,
     #slide3:checked ~ .video-slider-wrapper .slide3,
@@ -64,82 +64,61 @@
     .video-container {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 ratio */
+      padding-bottom: 56.25%;
       height: 0;
       overflow: hidden;
       border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     .video-container iframe {
-      position: absolute;
-      top: 0; left: 0;
+      position: absolute; top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
     }
 
     /* Desktop side arrows */
     .video-wrapper .arrow {
-      position: absolute;
-      top: 50%;
+      position: absolute; top: 50%;
       transform: translateY(-50%);
       width: 50px; height: 50px;
       background: #004AAD;
       color: #fff;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       transition: background 0.2s;
     }
-    .video-wrapper .arrow:hover {
-      background: #00337A;
-    }
+    .video-wrapper .arrow:hover { background: #00337A; }
     .video-wrapper .prev { left: -70px; }
     .video-wrapper .next { right: -70px; }
     /* Phantom placeholders */
-    .slide1 .prev, .slide4 .next {
-      visibility: hidden;
-    }
+    .slide1 .prev, .slide4 .next { visibility: hidden; }
 
     /* Mobile nav under the video */
     .mobile-nav {
-      display: none;           /* hidden on desktop/medium */
-      width: 100%;
+      display: none; width: 100%;
       margin-top: 20px;
       justify-content: space-between;
       align-items: center;
       box-sizing: border-box;
     }
     .mobile-nav .arrow {
-      /* preserve circle styling */
       width: 50px; height: 50px;
-      background: #004AAD;
-      color: #fff;
+      background: #004AAD; color: #fff;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       transition: background 0.2s;
     }
-    .mobile-nav .arrow:hover {
-      background: #00337A;
-    }
+    .mobile-nav .arrow:hover { background: #00337A; }
 
-    /* Show mobile nav on narrower screens, hide side arrows */
     @media (max-width: 768px) {
       .video-wrapper .arrow { display: none; }
-      .mobile-nav {
-        display: flex;         /* only becomes flex on small screens */
-      }
-      /* Phantom placeholders for mobile nav as well */
+      .mobile-nav { display: flex; }
       .slide1 .mobile-nav .prev,
-      .slide4 .mobile-nav .next {
-        visibility: hidden;
-      }
+      .slide4 .mobile-nav .next { visibility: hidden; }
     }
 
     /* Title & notice */
@@ -159,13 +138,12 @@
       margin: 0 auto 20px;
       border-radius: 4px;
     }
-    .slide .notice i {
-      color: #004AAD;
-    }
+    .slide .notice i { color: #004AAD; }
 
-    /* Test button styling */
+    /* Test button styling - centered */
     .btn {
-      display: inline-block;
+      display: block;
+      margin: 20px auto 0;
       background: #004AAD;
       color: #fff;
       padding: 15px 30px;
@@ -174,18 +152,25 @@
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.25s ease;
-      margin-top: 20px;
     }
-    .btn:hover {
-      background: #00337A;
-    }
-    #formContainer {
-      display: none;
-      margin-top: 50px;
-    }
+    .btn:hover { background: #00337A; }
   </style>
 </head>
 <body>
+
+  <!-- HeyForm modal configuration -->
+  <div
+    data-heyform-id="fPdwIszH"
+    data-heyform-type="modal"
+    data-heyform-custom-url="http://stafftools-heyform-d7f372-45-76-22-23.traefik.me/form/"
+    data-heyform-size="large"
+    data-heyform-open-trigger="manual"
+    data-heyform-trigger-background="#1d4ed8"
+    data-heyform-trigger-text="Open Form"
+    data-heyform-hide-after-submit="false"
+    data-heyform-auto-close="5">
+  </div>
+
   <div class="container">
     <h1>Mover & Swamper Certification Test</h1>
     <p class="intro">
@@ -209,11 +194,9 @@
         <div class="video-wrapper">
           <label for="slide1" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
           <div class="video-container">
-            <iframe
-              src="https://www.youtube.com/embed/videoseries?list=PLG0DGUHeVSlY4zgtv--3KrABC71q5ib8M"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-            </iframe>
+            <iframe src="https://www.youtube.com/embed/videoseries?list=PLG0DGUHeVSlY4zgtv--3KrABC71q5ib8M"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
           </div>
           <label for="slide2" class="arrow next"><i class="fa-solid fa-chevron-right"></i></label>
         </div>
@@ -233,11 +216,9 @@
         <div class="video-wrapper">
           <label for="slide1" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
           <div class="video-container">
-            <iframe
-              src="https://www.youtube.com/embed/videoseries?list=ANOTHER_PLAYLIST_ID_2"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-            </iframe>
+            <iframe src="https://www.youtube.com/embed/videoseries?list=ANOTHER_PLAYLIST_ID_2"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
           </div>
           <label for="slide3" class="arrow next"><i class="fa-solid fa-chevron-right"></i></label>
         </div>
@@ -257,13 +238,10 @@
         <div class="video-wrapper">
           <label for="slide2" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
           <div class="video-container">
-            <iframe
-              src="https://www.youtube.com/embed/videoseries?list=ANOTHER_PLAYLIST_ID_3"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-            </iframe>
+            <iframe src="https://www.youtube.com/embed/videoseries?list=ANOTHER_PLAYLIST_ID_3"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
           </div>
-          <!-- FINAL arrow leads to slide4 -->
           <label for="slide4" class="arrow next"><i class="fa-solid fa-chevron-right"></i></label>
         </div>
         <div class="mobile-nav">
@@ -272,48 +250,40 @@
         </div>
       </div>
 
-      <!-- Slide 4: Test page -->
+      <!-- Slide 4: Test page with BACK arrow -->
       <div class="slide slide4">
         <h2>You’re Ready!</h2>
         <div class="notice">
           <i class="fa-solid fa-check-circle" style="color:#004AAD;"></i>
           You’ve completed all training videos. Click below to take the test!
         </div>
-        <button id="testButton" class="btn">Take Certification Test</button>
-        <div id="formContainer">
-          <div
-            class="heyform"
-            data-heyform-id="YOUR_FORM_ID"
-            data-heyform-mode="0"
-            data-heyform-button-text="Start Test">
-          </div>
+        <div class="video-wrapper">
+          <!-- BACK arrow to Slide 3 -->
+          <label for="slide3" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
         </div>
+        <div class="mobile-nav">
+          <label for="slide3" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
+          <label for="slide4" class="arrow next"><i class="fa-solid fa-chevron-right"></i></label>
+        </div>
+        <button id="testButton" class="btn">Take Certification Test</button>
       </div>
     </div>
   </div>
 
-  <!-- Canvas-Confetti for celebration -->
+  <!-- HeyForm embed & confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-  <!-- HeyForm embed script -->
-  <script src="https://my.heyform.net/embed"></script>
+  <script src="https://www.unpkg.com/@heyform-inc/embed@latest/dist/index.umd.js"></script>
   <script>
-    // Fire confetti when slide4 is checked
-    const slide4 = document.getElementById('slide4');
-    slide4.addEventListener('change', () => {
-      if (slide4.checked) {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
+    // fire confetti on final slide
+    document.getElementById('slide4').addEventListener('change', e => {
+      if (e.target.checked) {
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
       }
     });
 
-    // Reveal HeyForm on button click
-    document.getElementById('testButton').addEventListener('click', function() {
-      document.getElementById('formContainer').style.display = 'block';
-      document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
-      this.style.display = 'none';
+    // open HeyForm modal on button click
+    document.getElementById('testButton').addEventListener('click', () => {
+      HeyForm.openModal('fPdwIszH');
     });
   </script>
 </body>
