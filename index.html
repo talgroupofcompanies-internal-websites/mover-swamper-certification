@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mover / Swamper Certification Test</title>
-  <!-- Google Font & Font-Awesome -->
+  <!-- Google Font & Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -19,17 +19,67 @@
       padding: 0 20px;
     }
     h1 {
-      text-align: center; color: #004AAD; margin-bottom: 10px;
+      text-align: center;
+      color: #004AAD;
+      margin-bottom: 10px;
     }
     p.intro {
-      text-align: center; margin-bottom: 30px; line-height: 1.6;
+      text-align: center;
+      margin-bottom: 30px;
+      line-height: 1.6;
     }
 
-    /* ► NEW: video slider wrapper */
-    .video-slider {
-      position: relative;
+    /* ► new flex‐slider wrapper */
+    .video-slider-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;           /* 20px between arrow & video */
       margin-bottom: 40px;
     }
+    /* arrow buttons */
+    .arrow {
+      flex: 0 0 auto;
+      width: 50px; height: 50px;
+      background: #004AAD;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: background 0.2s;
+    }
+    .arrow:hover {
+      background: #00337A;
+    }
+
+    /* section title & notice */
+    .video-section {
+      flex: 1;
+    }
+    h2.section-title {
+      text-align: center;
+      color: #004AAD;
+      margin-bottom: 10px;
+    }
+    .notice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border-left: 4px solid #004AAD;
+      padding: 10px 15px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    .notice i {
+      color: #004AAD;
+    }
+
+    /* video */
     .video-container {
       position: relative;
       padding-bottom: 56.25%; /* 16:9 */
@@ -45,41 +95,7 @@
       border: none;
     }
 
-    /* ► NEW: arrows */
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: #004AAD;
-      color: #fff;
-      width: 50px; height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      z-index: 2;
-    }
-    .arrow.left  { left: 20px; }
-    .arrow.right { right: 20px; }
-
-    h2.section-title {
-      text-align: center; color: #004AAD; margin-bottom: 10px;
-    }
-    .notice {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #fff;
-      border-left: 4px solid #004AAD;
-      padding: 10px 15px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      border-radius: 4px;
-    }
-    .notice i { color: #004AAD; }
-
+    /* test button + form */
     .btn {
       display: inline-block;
       background: #004AAD;
@@ -91,8 +107,9 @@
       cursor: pointer;
       transition: background 0.25s ease;
     }
-    .btn:hover { background: #00337A; }
-
+    .btn:hover {
+      background: #00337A;
+    }
     #formContainer {
       display: none;
       margin-top: 50px;
@@ -107,29 +124,32 @@
       You must score 80% or higher.
     </p>
 
-    <div class="video-slider">
-      <div class="arrow left"  id="prevBtn"><i class="fa-solid fa-chevron-left"></i></div>
-      <div class="arrow right" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></div>
+    <div class="video-slider-wrapper">
+      <div class="arrow" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></div>
 
-      <h2 class="section-title" id="sectionTitle">Section Title</h2>
-      <div class="notice">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        Important: The video below is a playlist of 5 videos. Please watch them all before moving to the next section!
+      <div class="video-section">
+        <h2 class="section-title" id="sectionTitle">Section Title</h2>
+        <div class="notice">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          Important: The video below is a playlist of 5 videos. Please watch them all before moving to the next section!
+        </div>
+        <div class="video-container">
+          <iframe
+            id="playlistFrame"
+            src=""
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
       </div>
 
-      <div class="video-container">
-        <iframe
-          id="playlistFrame"
-          src=""
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe>
-      </div>
+      <div class="arrow" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></div>
     </div>
 
     <div style="text-align: center;">
       <button id="testButton" class="btn">Take Certification Test</button>
     </div>
+
     <div id="formContainer">
       <div
         class="heyform"
@@ -140,18 +160,23 @@
     </div>
   </div>
 
+  <!-- HeyForm embed script -->
   <script src="https://my.heyform.net/embed"></script>
   <script>
+    // your playlist sections
     const playlists = [
       { title: "Section 1: Safety Basics",            id: "PLG0DGUHeVSlY4zgtv--3KrABC71q5ib8M" },
       { title: "Section 2: Proper Lifting Techniques", id: "ANOTHER_PLAYLIST_ID_2" },
       { title: "Section 3: Equipment & Tools",         id: "ANOTHER_PLAYLIST_ID_3" }
+      // …add more as needed
     ];
+
     let current = 0;
     const titleEl = document.getElementById('sectionTitle');
     const frameEl = document.getElementById('playlistFrame');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+
     function updateSection() {
       const { title, id } = playlists[current];
       titleEl.textContent = title;
@@ -159,11 +184,12 @@
       prevBtn.style.visibility = current === 0 ? 'hidden' : 'visible';
       nextBtn.style.visibility = current === playlists.length - 1 ? 'hidden' : 'visible';
     }
-    prevBtn.addEventListener('click', () => { if (current>0) current--, updateSection(); });
-    nextBtn.addEventListener('click', () => { if (current<playlists.length-1) current++, updateSection(); });
+    prevBtn.addEventListener('click', () => { if (current > 0) current--, updateSection(); });
+    nextBtn.addEventListener('click', () => { if (current < playlists.length - 1) current++, updateSection(); });
     updateSection();
 
-    document.getElementById('testButton').addEventListener('click', function(){
+    // reveal HeyForm
+    document.getElementById('testButton').addEventListener('click', function() {
       document.getElementById('formContainer').style.display = 'block';
       document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
       this.style.display = 'none';
