@@ -29,6 +29,13 @@
       line-height: 1.6;
     }
 
+    /* hide the radios */
+    input[name="slider"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
     /* Section title & notice */
     h2.section-title {
       text-align: center;
@@ -50,39 +57,28 @@
       color: #004AAD;
     }
 
-    /* ► slider wrapper now full-width flex container */
+    /* slider wrapper */
     .video-slider-wrapper {
-      display: flex;
-      align-items: center;      /* vertical center */
-      justify-content: center;
-      width: 100%;              /* fill the .container */
-      gap: 20px;                /* 20px between arrows & video */
-      margin-bottom: 40px;
-    }
-
-    /* arrow buttons */
-    .arrow {
-      flex: 0 0 auto;
-      width: 50px; height: 50px;
-      background: #004AAD;
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      transition: background 0.2s;
-    }
-    .arrow:hover {
-      background: #00337A;
-    }
-
-    /* ► video container now grows to fill remaining space */
-    .video-container {
-      flex: 1;                  /* <-- ensures it fills the gap */
       position: relative;
-      padding-bottom: 56.25%;   /* 16:9 ratio */
+      width: 100%;
+      margin-bottom: 40px;
+      padding: 0 80px; /* space for arrows */
+    }
+
+    /* slides */
+    .video-slider-wrapper .slide {
+      display: none;
+    }
+    #slide1:checked ~ .video-slider-wrapper .slide1,
+    #slide2:checked ~ .video-slider-wrapper .slide2,
+    #slide3:checked ~ .video-slider-wrapper .slide3 {
+      display: block;
+    }
+
+    /* video container */
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
       height: 0;
       overflow: hidden;
       border-radius: 8px;
@@ -93,6 +89,35 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
+    }
+
+    /* arrow buttons */
+    .video-slider-wrapper .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px; height: 50px;
+      background: #004AAD;
+      color: #fff;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: background 0.2s;
+    }
+    .video-slider-wrapper .arrow:hover {
+      background: #00337A;
+    }
+    .video-slider-wrapper .arrow.left  { left: 20px; }
+    .video-slider-wrapper .arrow.right { right: 20px; }
+
+    /* show the correct arrows per slide */
+    #slide1:checked ~ .video-slider-wrapper .arrow[data-slide="1"],
+    #slide2:checked ~ .video-slider-wrapper .arrow[data-slide="2"],
+    #slide3:checked ~ .video-slider-wrapper .arrow[data-slide="3"] {
+      display: flex;
     }
 
     /* test button + form */
@@ -106,6 +131,7 @@
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.25s ease;
+      margin-top: 20px;
     }
     .btn:hover {
       background: #00337A;
@@ -124,25 +150,62 @@
       You must score 80% or higher.
     </p>
 
+    <!-- hidden radios to track slide -->
+    <input type="radio" name="slider" id="slide1" checked>
+    <input type="radio" name="slider" id="slide2">
+    <input type="radio" name="slider" id="slide3">
+
     <!-- Section header & notice -->
-    <h2 class="section-title" id="sectionTitle">Section Title</h2>
+    <h2 class="section-title" id="sectionTitle">Section 1: Safety Basics</h2>
     <div class="notice">
       <i class="fa-solid fa-triangle-exclamation"></i>
       Important: The video below is a playlist of 5 videos. Please watch them all before moving to the next section!
     </div>
 
-    <!-- Slider wrapper: arrows + video -->
+    <!-- Slider wrapper: contains arrows + slides -->
     <div class="video-slider-wrapper">
-      <div class="arrow" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></div>
-      <div class="video-container">
-        <iframe
-          id="playlistFrame"
-          src=""
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe>
+      <!-- arrows -->
+      <label for="slide2" class="arrow right" data-slide="1">
+        <i class="fa-solid fa-chevron-right"></i>
+      </label>
+      <label for="slide1" class="arrow left" data-slide="2">
+        <i class="fa-solid fa-chevron-left"></i>
+      </label>
+      <label for="slide3" class="arrow right" data-slide="2">
+        <i class="fa-solid fa-chevron-right"></i>
+      </label>
+      <label for="slide2" class="arrow left" data-slide="3">
+        <i class="fa-solid fa-chevron-left"></i>
+      </label>
+
+      <!-- slides -->
+      <div class="slide slide1">
+        <div class="video-container">
+          <iframe
+            src="https://www.youtube.com/embed/videoseries?list=PLG0DGUHeVSlY4zgtv--3KrABC71q5ib8M"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
       </div>
-      <div class="arrow" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="slide slide2">
+        <div class="video-container">
+          <iframe
+            src="https://www.youtube.com/embed/videoseries?list=ANOTHER_PLAYLIST_ID_2"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+      <div class="slide slide3">
+        <div class="video-container">
+          <iframe
+            src="https://www.youtube.com/embed/videoseries?list=ANOTHER_PLAYLIST_ID_3"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
     </div>
 
     <div style="text-align: center;">
@@ -161,30 +224,7 @@
   <!-- HeyForm embed script -->
   <script src="https://my.heyform.net/embed"></script>
   <script>
-    const playlists = [
-      { title: "Section 1: Safety Basics",            id: "PLG0DGUHeVSlY4zgtv--3KrABC71q5ib8M" },
-      { title: "Section 2: Proper Lifting Techniques", id: "ANOTHER_PLAYLIST_ID_2" },
-      { title: "Section 3: Equipment & Tools",         id: "ANOTHER_PLAYLIST_ID_3" }
-    ];
-
-    let current = 0;
-    const titleEl = document.getElementById('sectionTitle');
-    const frameEl = document.getElementById('playlistFrame');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-
-    function updateSection() {
-      const { title, id } = playlists[current];
-      titleEl.textContent = title;
-      frameEl.src = `https://www.youtube.com/embed/videoseries?list=${id}`;
-      prevBtn.style.visibility = current === 0 ? 'hidden' : 'visible';
-      nextBtn.style.visibility = current === playlists.length - 1 ? 'hidden' : 'visible';
-    }
-
-    prevBtn.addEventListener('click', () => { if (current > 0) current--, updateSection(); });
-    nextBtn.addEventListener('click', () => { if (current < playlists.length - 1) current++, updateSection(); });
-    updateSection();
-
+    // still using JS just to reveal the form on button click
     document.getElementById('testButton').addEventListener('click', function() {
       document.getElementById('formContainer').style.display = 'block';
       document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
