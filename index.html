@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certification Training</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0; padding: 0;
+      background: #f9f9f9; color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #004AAD;
+      margin-bottom: 10px;
+    }
+    p {
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 ratio */
+      height: 0;
+      overflow: hidden;
+      margin-bottom: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .btn {
+      display: inline-block;
+      background: #004AAD;
+      color: #fff;
+      padding: 15px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+    .btn:hover {
+      background: #00337A;
+    }
+    #formContainer {
+      display: none;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Certification Training</h1>
+    <p>
+      Welcome! To earn your certification, please watch the full playlist below.  
+      These videos cover every concept you’ll be tested on.  
+      Make sure you understand each topic thoroughly before taking the test.
+    </p>
+
+    <div class="video-container">
+      <iframe
+        src="https://www.youtube.com/embed?list=PLAYLIST_ID"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div style="text-align: center;">
+      <button id="testButton" class="btn">Take Certification Test</button>
+    </div>
+
+    <div id="formContainer">
+      <!-- HeyForm Embed (hidden until button click) -->
+      <div
+        class="heyform"
+        data-heyform-id="YOUR_FORM_ID"
+        data-heyform-mode="0"
+        data-heyform-button-text="Start Test">
+      </div>
+    </div>
+  </div>
+
+  <!-- HeyForm script -->
+  <script src="https://my.heyform.net/embed"></script>
+  <script>
+    document.getElementById('testButton').addEventListener('click', function() {
+      // show the form
+      document.getElementById('formContainer').style.display = 'block';
+      // scroll to it
+      document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
+      // hide the button
+      this.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
