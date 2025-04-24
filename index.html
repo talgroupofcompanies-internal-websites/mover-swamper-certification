@@ -1,6 +1,3 @@
-Here’s the adjusted version: each `.slide` now becomes a flex column centered horizontally, so the notice box will auto-center under the title. The rest (arrows, video, phantom placeholders) remains the same.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,11 +32,9 @@ Here’s the adjusted version: each `.slide` now becomes a flex column centered 
       pointer-events: none;
     }
 
-    /* slides are hidden by default */
-    .slide {
-      display: none;
-    }
-    /* active slide becomes a centered flex column */
+    /* slides hidden by default */
+    .slide { display: none; }
+    /* active slide = flex column centered */
     #slide1:checked ~ .video-slider-wrapper .slide1,
     #slide2:checked ~ .video-slider-wrapper .slide2,
     #slide3:checked ~ .video-slider-wrapper .slide3 {
@@ -48,14 +43,14 @@ Here’s the adjusted version: each `.slide` now becomes a flex column centered 
       align-items: center;
     }
 
-    /* wrapper for video + arrows */
     .video-slider-wrapper {
       margin-bottom: 40px;
+      width: 100%;
     }
     .video-wrapper {
       position: relative;
-      margin: 0 auto;
       width: 100%;
+      max-width: 100%;
     }
     .video-container {
       position: relative;
@@ -72,7 +67,7 @@ Here’s the adjusted version: each `.slide` now becomes a flex column centered 
       border: none;
     }
 
-    /* arrows: 50px circle, 20px outside video, perfectly centered vertically */
+    /* desktop arrows */
     .video-wrapper .arrow {
       position: absolute;
       top: 50%;
@@ -94,13 +89,36 @@ Here’s the adjusted version: each `.slide` now becomes a flex column centered 
     .video-wrapper .prev { left: -70px; }
     .video-wrapper .next { right: -70px; }
 
-    /* phantom placeholders on first/last slide: hide circle+icon but keep space */
+    /* phantom placeholders */
     .slide1 .prev,
     .slide3 .next {
       visibility: hidden;
     }
 
-    /* title & notice centered inside slide-column */
+    /* mobile nav under video */
+    .mobile-nav {
+      display: none;
+      margin-top: 10px;
+      gap: 20px;
+      justify-content: center;
+    }
+    .mobile-nav .arrow {
+      position: static;
+      transform: none;
+    }
+
+    /* show mobile nav on small screens, hide desktop arrows */
+    @media (max-width: 600px) {
+      .video-wrapper .arrow { display: none; }
+      .mobile-nav { display: flex; }
+      /* phantom placeholders for mobile nav too */
+      .slide1 .mobile-nav .prev,
+      .slide3 .mobile-nav .next {
+        visibility: hidden;
+      }
+    }
+
+    /* title & notice */
     .slide h2 {
       text-align: center;
       color: #004AAD;
@@ -114,12 +132,10 @@ Here’s the adjusted version: each `.slide` now becomes a flex column centered 
       border-left: 4px solid #004AAD;
       padding: 10px 15px;
       font-weight: 600;
-      margin-bottom: 20px;
+      margin: 0 auto 20px;
       border-radius: 4px;
     }
-    .slide .notice i {
-      color: #004AAD;
-    }
+    .slide .notice i { color: #004AAD; }
 
     /* test button + form */
     .btn {
@@ -170,6 +186,10 @@ Here’s the adjusted version: each `.slide` now becomes a flex column centered 
           </div>
           <label for="slide2" class="arrow next"><i class="fa-solid fa-chevron-right"></i></label>
         </div>
+        <div class="mobile-nav">
+          <label for="slide1" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
+          <label for="slide2" class="arrow next"><i class="fa-solid fa-chevron-right"></i></label>
+        </div>
       </div>
 
       <!-- Slide 2 -->
@@ -190,6 +210,10 @@ Here’s the adjusted version: each `.slide` now becomes a flex column centered 
           </div>
           <label for="slide3" class="arrow next"><i class="fa-solid fa-chevron-right"></i></label>
         </div>
+        <div class="mobile-nav">
+          <label for="slide1" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
+          <label for="slide3" class="arrow next"><i class="fa-solid fa-chevron-right"></i></label>
+        </div>
       </div>
 
       <!-- Slide 3 -->
@@ -208,6 +232,10 @@ Here’s the adjusted version: each `.slide` now becomes a flex column centered 
               allowfullscreen>
             </iframe>
           </div>
+          <label for="slide3" class="arrow next"><i class="fa-solid fa-chevron-right"></i></label>
+        </div>
+        <div class="mobile-nav">
+          <label for="slide2" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
           <label for="slide3" class="arrow next"><i class="fa-solid fa-chevron-right"></i></label>
         </div>
       </div>
@@ -237,4 +265,3 @@ Here’s the adjusted version: each `.slide` now becomes a flex column centered 
   </script>
 </body>
 </html>
-```
