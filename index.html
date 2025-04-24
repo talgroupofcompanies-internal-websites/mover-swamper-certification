@@ -32,25 +32,27 @@
       pointer-events: none;
     }
 
-    /* only show the active slide */
-    .slide { display: none; }
+    /* slides are hidden by default */
+    .slide {
+      display: none;
+    }
+    /* active slide becomes a centered flex column */
     #slide1:checked ~ .video-slider-wrapper .slide1,
     #slide2:checked ~ .video-slider-wrapper .slide2,
     #slide3:checked ~ .video-slider-wrapper .slide3 {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    /* we no longer pad the wrapper; arrows sit relative to .video-wrapper */
+    /* wrapper for video + arrows */
     .video-slider-wrapper {
       margin-bottom: 40px;
     }
-
-    /* video-wrapper holds video + arrows */
     .video-wrapper {
       position: relative;
       margin: 0 auto;
       width: 100%;
-      max-width: 100%;
     }
     .video-container {
       position: relative;
@@ -62,13 +64,12 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     .video-container iframe {
-      position: absolute;
-      top: 0; left: 0;
+      position: absolute; top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
     }
 
-    /* arrows absolutely centered on the video, 20px outside */
+    /* arrows: 50px circle, 20px outside video, perfectly centered vertically */
     .video-wrapper .arrow {
       position: absolute;
       top: 50%;
@@ -90,13 +91,13 @@
     .video-wrapper .prev { left: -70px; }
     .video-wrapper .next { right: -70px; }
 
-    /* phantom arrows on slide1.prev and slide3.next: hide both circle & icon */
+    /* phantom placeholders on first/last slide: hide circle+icon but keep space */
     .slide1 .prev,
     .slide3 .next {
       visibility: hidden;
     }
 
-    /* section title & notice inside each slide */
+    /* title & notice centered inside slide-column */
     .slide h2 {
       text-align: center;
       color: #004AAD;
@@ -110,7 +111,7 @@
       border-left: 4px solid #004AAD;
       padding: 10px 15px;
       font-weight: 600;
-      margin: 0 auto 20px;
+      margin-bottom: 20px;
       border-radius: 4px;
     }
     .slide .notice i {
@@ -130,13 +131,8 @@
       transition: background 0.25s ease;
       margin-top: 20px;
     }
-    .btn:hover {
-      background: #00337A;
-    }
-    #formContainer {
-      display: none;
-      margin-top: 50px;
-    }
+    .btn:hover { background: #00337A; }
+    #formContainer { display: none; margin-top: 50px; }
   </style>
 </head>
 <body>
