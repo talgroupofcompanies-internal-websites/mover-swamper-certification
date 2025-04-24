@@ -29,36 +29,7 @@
       line-height: 1.6;
     }
 
-    /* ► new flex‐slider wrapper */
-    .video-slider-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;           /* 20px between arrow & video */
-      margin-bottom: 40px;
-    }
-    /* arrow buttons */
-    .arrow {
-      flex: 0 0 auto;
-      width: 50px; height: 50px;
-      background: #004AAD;
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      transition: background 0.2s;
-    }
-    .arrow:hover {
-      background: #00337A;
-    }
-
-    /* section title & notice */
-    .video-section {
-      flex: 1;
-    }
+    /* Section header & notice */
     h2.section-title {
       text-align: center;
       color: #004AAD;
@@ -79,7 +50,32 @@
       color: #004AAD;
     }
 
-    /* video */
+    /* ► slider only wraps arrows + video */
+    .video-slider-wrapper {
+      display: flex;
+      align-items: center;   /* now centers against the video */
+      justify-content: center;
+      gap: 20px;             /* 20px gap from video edges */
+      margin-bottom: 40px;
+    }
+
+    .arrow {
+      flex: 0 0 auto;
+      width: 50px; height: 50px;
+      background: #004AAD;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: background 0.2s;
+    }
+    .arrow:hover {
+      background: #00337A;
+    }
+
     .video-container {
       position: relative;
       padding-bottom: 56.25%; /* 16:9 */
@@ -95,7 +91,6 @@
       border: none;
     }
 
-    /* test button + form */
     .btn {
       display: inline-block;
       background: #004AAD;
@@ -124,32 +119,30 @@
       You must score 80% or higher.
     </p>
 
+    <!-- Section header & notice moved OUTSIDE slider -->
+    <h2 class="section-title" id="sectionTitle">Section Title</h2>
+    <div class="notice">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      Important: The video below is a playlist of 5 videos. Please watch them all before moving to the next section!
+    </div>
+
+    <!-- Slider now only wraps arrows + video -->
     <div class="video-slider-wrapper">
       <div class="arrow" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></div>
-
-      <div class="video-section">
-        <h2 class="section-title" id="sectionTitle">Section Title</h2>
-        <div class="notice">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-          Important: The video below is a playlist of 5 videos. Please watch them all before moving to the next section!
-        </div>
-        <div class="video-container">
-          <iframe
-            id="playlistFrame"
-            src=""
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-        </div>
+      <div class="video-container">
+        <iframe
+          id="playlistFrame"
+          src=""
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
       </div>
-
       <div class="arrow" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></div>
     </div>
 
     <div style="text-align: center;">
       <button id="testButton" class="btn">Take Certification Test</button>
     </div>
-
     <div id="formContainer">
       <div
         class="heyform"
@@ -160,17 +153,14 @@
     </div>
   </div>
 
-  <!-- HeyForm embed script -->
+  <!-- HeyForm embed -->
   <script src="https://my.heyform.net/embed"></script>
   <script>
-    // your playlist sections
     const playlists = [
       { title: "Section 1: Safety Basics",            id: "PLG0DGUHeVSlY4zgtv--3KrABC71q5ib8M" },
       { title: "Section 2: Proper Lifting Techniques", id: "ANOTHER_PLAYLIST_ID_2" },
       { title: "Section 3: Equipment & Tools",         id: "ANOTHER_PLAYLIST_ID_3" }
-      // …add more as needed
     ];
-
     let current = 0;
     const titleEl = document.getElementById('sectionTitle');
     const frameEl = document.getElementById('playlistFrame');
@@ -184,12 +174,11 @@
       prevBtn.style.visibility = current === 0 ? 'hidden' : 'visible';
       nextBtn.style.visibility = current === playlists.length - 1 ? 'hidden' : 'visible';
     }
-    prevBtn.addEventListener('click', () => { if (current > 0) current--, updateSection(); });
-    nextBtn.addEventListener('click', () => { if (current < playlists.length - 1) current++, updateSection(); });
+    prevBtn.addEventListener('click', () => { if (current>0) current--, updateSection(); });
+    nextBtn.addEventListener('click', () => { if (current<playlists.length-1) current++, updateSection(); });
     updateSection();
 
-    // reveal HeyForm
-    document.getElementById('testButton').addEventListener('click', function() {
+    document.getElementById('testButton').addEventListener('click', function(){
       document.getElementById('formContainer').style.display = 'block';
       document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
       this.style.display = 'none';
