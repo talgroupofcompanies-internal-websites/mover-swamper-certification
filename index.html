@@ -29,7 +29,7 @@
       line-height: 1.6;
     }
 
-    /* Section header & notice */
+    /* Section title & notice */
     h2.section-title {
       text-align: center;
       color: #004AAD;
@@ -50,15 +50,17 @@
       color: #004AAD;
     }
 
-    /* ► slider only wraps arrows + video */
+    /* ► slider wrapper now full-width flex container */
     .video-slider-wrapper {
       display: flex;
-      align-items: center;   /* now centers against the video */
+      align-items: center;      /* vertical center */
       justify-content: center;
-      gap: 20px;             /* 20px gap from video edges */
+      width: 100%;              /* fill the .container */
+      gap: 20px;                /* 20px between arrows & video */
       margin-bottom: 40px;
     }
 
+    /* arrow buttons */
     .arrow {
       flex: 0 0 auto;
       width: 50px; height: 50px;
@@ -76,9 +78,11 @@
       background: #00337A;
     }
 
+    /* ► video container now grows to fill remaining space */
     .video-container {
+      flex: 1;                  /* <-- ensures it fills the gap */
       position: relative;
-      padding-bottom: 56.25%; /* 16:9 */
+      padding-bottom: 56.25%;   /* 16:9 ratio */
       height: 0;
       overflow: hidden;
       border-radius: 8px;
@@ -91,6 +95,7 @@
       border: none;
     }
 
+    /* test button + form */
     .btn {
       display: inline-block;
       background: #004AAD;
@@ -119,14 +124,14 @@
       You must score 80% or higher.
     </p>
 
-    <!-- Section header & notice moved OUTSIDE slider -->
+    <!-- Section header & notice -->
     <h2 class="section-title" id="sectionTitle">Section Title</h2>
     <div class="notice">
       <i class="fa-solid fa-triangle-exclamation"></i>
       Important: The video below is a playlist of 5 videos. Please watch them all before moving to the next section!
     </div>
 
-    <!-- Slider now only wraps arrows + video -->
+    <!-- Slider wrapper: arrows + video -->
     <div class="video-slider-wrapper">
       <div class="arrow" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></div>
       <div class="video-container">
@@ -153,7 +158,7 @@
     </div>
   </div>
 
-  <!-- HeyForm embed -->
+  <!-- HeyForm embed script -->
   <script src="https://my.heyform.net/embed"></script>
   <script>
     const playlists = [
@@ -161,6 +166,7 @@
       { title: "Section 2: Proper Lifting Techniques", id: "ANOTHER_PLAYLIST_ID_2" },
       { title: "Section 3: Equipment & Tools",         id: "ANOTHER_PLAYLIST_ID_3" }
     ];
+
     let current = 0;
     const titleEl = document.getElementById('sectionTitle');
     const frameEl = document.getElementById('playlistFrame');
@@ -174,11 +180,12 @@
       prevBtn.style.visibility = current === 0 ? 'hidden' : 'visible';
       nextBtn.style.visibility = current === playlists.length - 1 ? 'hidden' : 'visible';
     }
-    prevBtn.addEventListener('click', () => { if (current>0) current--, updateSection(); });
-    nextBtn.addEventListener('click', () => { if (current<playlists.length-1) current++, updateSection(); });
+
+    prevBtn.addEventListener('click', () => { if (current > 0) current--, updateSection(); });
+    nextBtn.addEventListener('click', () => { if (current < playlists.length - 1) current++, updateSection(); });
     updateSection();
 
-    document.getElementById('testButton').addEventListener('click', function(){
+    document.getElementById('testButton').addEventListener('click', function() {
       document.getElementById('formContainer').style.display = 'block';
       document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
       this.style.display = 'none';
