@@ -19,14 +19,10 @@
       padding: 0 20px;
     }
     h1 {
-      text-align: center;
-      color: #004AAD;
-      margin-bottom: 10px;
+      text-align: center; color: #004AAD; margin-bottom: 10px;
     }
     p.intro {
-      text-align: center;
-      margin-bottom: 30px;
-      line-height: 1.6;
+      text-align: center; margin-bottom: 30px; line-height: 1.6;
     }
 
     /* hide the radios */
@@ -36,26 +32,30 @@
       pointer-events: none;
     }
 
-    /* stack slides, only one shows */
-    .slide {
-      display: none;
-    }
+    /* only show the active slide */
+    .slide { display: none; }
     #slide1:checked ~ .video-slider-wrapper .slide1,
     #slide2:checked ~ .video-slider-wrapper .slide2,
     #slide3:checked ~ .video-slider-wrapper .slide3 {
       display: block;
     }
 
-    /* wrap only the video + arrows */
+    /* we no longer pad the wrapper; arrows sit relative to .video-wrapper */
+    .video-slider-wrapper {
+      margin-bottom: 40px;
+    }
+
+    /* video-wrapper holds video + arrows */
     .video-wrapper {
       position: relative;
-      padding: 0 70px;        /* 70px padding for 50px arrow + 20px gap */
-      margin-bottom: 40px;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 100%;
     }
     .video-container {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%;  /* 16:9 */
+      padding-bottom: 56.25%; /* 16:9 */
       height: 0;
       overflow: hidden;
       border-radius: 8px;
@@ -68,7 +68,7 @@
       border: none;
     }
 
-    /* arrows */
+    /* arrows absolutely centered on the video, 20px outside */
     .video-wrapper .arrow {
       position: absolute;
       top: 50%;
@@ -87,10 +87,10 @@
     .video-wrapper .arrow:hover {
       background: #00337A;
     }
-    .video-wrapper .prev { left: 20px; }
-    .video-wrapper .next { right: 20px; }
+    .video-wrapper .prev { left: -70px; }
+    .video-wrapper .next { right: -70px; }
 
-    /* phantom arrows on first/last slides: hide circle+icon but keep space */
+    /* phantom arrows on slide1.prev and slide3.next: hide both circle & icon */
     .slide1 .prev,
     .slide3 .next {
       visibility: hidden;
@@ -103,16 +103,15 @@
       margin-bottom: 10px;
     }
     .slide .notice {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 10px;
       background: #fff;
       border-left: 4px solid #004AAD;
       padding: 10px 15px;
       font-weight: 600;
-      margin-bottom: 20px;
+      margin: 0 auto 20px;
       border-radius: 4px;
-      justify-content: center;
     }
     .slide .notice i {
       color: #004AAD;
@@ -144,7 +143,7 @@
   <div class="container">
     <h1>Mover / Swamper Certification Test</h1>
     <p class="intro">
-      Welcome! To earn your certification, watch each full video playlist below (5 videos each), then click “Take Certification Test.”  
+      Welcome! To earn your certification, watch each full video playlist below (5 videos each), then click “Take Certification Test.”<br>
       You must score 80% or higher.
     </p>
 
