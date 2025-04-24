@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mover / Swamper Certification Test</title>
+  <title>Mover & Swamper Certification Test</title>
   <!-- Google Font & Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Prevent any horizontal scrolling */
+    /* Prevent horizontal scrolling */
     body {
       font-family: 'Montserrat', sans-serif;
       margin: 0; padding: 0;
@@ -43,7 +43,7 @@
     .slide {
       display: none;
     }
-    /* Active slide */
+    /* Active slide becomes visible & centered */
     #slide1:checked ~ .video-slider-wrapper .slide1,
     #slide2:checked ~ .video-slider-wrapper .slide2,
     #slide3:checked ~ .video-slider-wrapper .slide3 {
@@ -63,7 +63,7 @@
     .video-container {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 */
+      padding-bottom: 56.25%; /* 16:9 ratio */
       height: 0;
       overflow: hidden;
       border-radius: 8px;
@@ -97,33 +97,43 @@
     }
     .video-wrapper .prev { left: -70px; }
     .video-wrapper .next { right: -70px; }
-
     /* Phantom placeholders */
-    .slide1 .prev,
-    .slide3 .next {
+    .slide1 .prev, .slide3 .next {
       visibility: hidden;
     }
 
     /* Mobile nav under the video */
     .mobile-nav {
       display: none;
-      position: relative;
       width: 100%;
       margin-top: 20px;
-      height: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
     }
     .mobile-nav .arrow {
-      position: absolute;
-      top: 0;
+      /* preserve circle styling */
+      width: 50px; height: 50px;
+      background: #004AAD;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: background 0.2s;
     }
-    .mobile-nav .prev { left: 0; }
-    .mobile-nav .next { right: 0; }
+    .mobile-nav .arrow:hover {
+      background: #00337A;
+    }
 
-    /* Switch at ≤768px: hide side arrows, show mobile nav */
+    /* Show mobile nav on narrower screens, hide side arrows */
     @media (max-width: 768px) {
       .video-wrapper .arrow { display: none; }
-      .mobile-nav { display: block; }
-      /* Phantom again for mobile */
+      .mobile-nav { display: flex; }
+      /* Phantom placeholders for mobile nav as well */
       .slide1 .mobile-nav .prev,
       .slide3 .mobile-nav .next {
         visibility: hidden;
@@ -151,7 +161,16 @@
       color: #004AAD;
     }
 
-    /* Test button + form */
+    /* Test-container hidden until last slide */
+    .test-container {
+      display: none;
+    }
+    #slide3:checked ~ .test-container {
+      display: block;
+      text-align: center;
+    }
+
+    /* Test button & form */
     .btn {
       display: inline-block;
       background: #004AAD;
@@ -175,10 +194,9 @@
 </head>
 <body>
   <div class="container">
-    <h1>Mover / Swamper Certification Test</h1>
+    <h1>Mover & Swamper Certification Test</h1>
     <p class="intro">
-      Welcome! To earn your certification, watch each full video playlist below (5 videos each), then click “Take Certification Test.”<br>
-      You must score 80% or higher.
+      Welcome! To earn your certification, watch each full video below, then click “Take Certification Test.”<br>
     </p>
 
     <!-- Radios to track slides -->
@@ -189,10 +207,10 @@
     <div class="video-slider-wrapper">
       <!-- Slide 1 -->
       <div class="slide slide1">
-        <h2>Section 1: Safety Basics</h2>
+        <h2>Section 1: Back Safety</h2>
         <div class="notice">
           <i class="fa-solid fa-triangle-exclamation"></i>
-          Important: Playlist of 5 videos. Please watch them all before moving on!
+          Important: Please watch the full video before moving on!
         </div>
         <div class="video-wrapper">
           <label for="slide1" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
@@ -216,7 +234,7 @@
         <h2>Section 2: Proper Lifting Techniques</h2>
         <div class="notice">
           <i class="fa-solid fa-triangle-exclamation"></i>
-          Important: Playlist of 5 videos. Please watch them all before moving on!
+          Important: Please watch the full video before moving on!
         </div>
         <div class="video-wrapper">
           <label for="slide1" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
@@ -240,7 +258,7 @@
         <h2>Section 3: Equipment & Tools</h2>
         <div class="notice">
           <i class="fa-solid fa-triangle-exclamation"></i>
-          Important: Playlist of 5 videos. Please watch them all before moving on!
+          Important: Please watch the full video before moving on!
         </div>
         <div class="video-wrapper">
           <label for="slide2" class="arrow prev"><i class="fa-solid fa-chevron-left"></i></label>
@@ -260,15 +278,15 @@
       </div>
     </div>
 
-    <div style="text-align: center;">
+    <div class="test-container">
       <button id="testButton" class="btn">Take Certification Test</button>
-    </div>
-    <div id="formContainer">
-      <div
-        class="heyform"
-        data-heyform-id="YOUR_FORM_ID"
-        data-heyform-mode="0"
-        data-heyform-button-text="Start Test">
+      <div id="formContainer">
+        <div
+          class="heyform"
+          data-heyform-id="YOUR_FORM_ID"
+          data-heyform-mode="0"
+          data-heyform-button-text="Start Test">
+        </div>
       </div>
     </div>
   </div>
