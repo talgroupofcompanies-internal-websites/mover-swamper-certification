@@ -105,10 +105,9 @@
 
     /* Mobile nav under the video */
     .mobile-nav {
-      display: none;
+      display: none;           /* hidden on desktop/medium */
       width: 100%;
       margin-top: 20px;
-      display: flex;
       justify-content: space-between;
       align-items: center;
       box-sizing: border-box;
@@ -133,7 +132,9 @@
     /* Show mobile nav on narrower screens, hide side arrows */
     @media (max-width: 768px) {
       .video-wrapper .arrow { display: none; }
-      .mobile-nav { display: flex; }
+      .mobile-nav {
+        display: flex;         /* only becomes flex on small screens */
+      }
       /* Phantom placeholders for mobile nav as well */
       .slide1 .mobile-nav .prev,
       .slide4 .mobile-nav .next {
