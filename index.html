@@ -6,6 +6,8 @@
   <title>Mover / Swamper Certification Test</title>
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
@@ -16,22 +18,28 @@
       max-width: 800px;
       margin: 40px auto;
       padding: 0 20px;
+      position: relative; /* allow arrows overflow */
     }
     h1 {
       text-align: center;
       color: #004AAD;
       margin-bottom: 10px;
     }
-    p {
+    p.intro {
       line-height: 1.6;
       margin-bottom: 30px;
+      text-align: center;
+    }
+    .slider {
+      position: relative;
+      overflow: visible;
+      margin-bottom: 40px;
     }
     .video-container {
       position: relative;
-      padding-bottom: 56.25%; /* 16:9 ratio */
+      padding-bottom: 56.25%; /* 16:9 */
       height: 0;
       overflow: hidden;
-      margin-bottom: 40px;
       border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
@@ -41,6 +49,40 @@
       width: 100%; height: 100%;
       border: none;
     }
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #004AAD;
+      color: #fff;
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .arrow.left { left: -25px; }
+    .arrow.right { right: -25px; }
+    h2.section-title {
+      text-align: center;
+      color: #004AAD;
+      margin-bottom: 10px;
+    }
+    .notice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border-left: 4px solid #004AAD;
+      padding: 10px 15px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    .notice i { color: #004AAD; }
     .btn {
       display: inline-block;
       background: #004AAD;
@@ -52,9 +94,7 @@
       cursor: pointer;
       transition: background 0.25s ease;
     }
-    .btn:hover {
-      background: #00337A;
-    }
+    .btn:hover { background: #00337A; }
     #formContainer {
       display: none;
       margin-top: 50px;
@@ -64,18 +104,36 @@
 <body>
   <div class="container">
     <h1>Mover / Swamper Certification Test</h1>
-    <p>
-      Welcome! Are you ready to get to work, safely?! To earn your mover / swamper certification with us, please watch the full playlist of safety & training videos below and complete the test with a score of 80% or higher. These videos cover every concept you’ll be tested on. Make sure you understand each topic thoroughly before taking the test! Good luck.
+    <p class="intro">
+      Welcome! To earn your certification, watch each full video playlist below (5 videos each), then click “Take Certification Test.”<br>
+      You must score 80% or higher.
     </p>
 
-    <div class="video-container">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=4R88KoE1Sc6BxJnb&amp;list=PLG0DGUHeVSlY4zgtv--3KrABC71q5ib8M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>    </div>
+    <div class="slider">
+      <div class="arrow left" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></div>
+      <div class="arrow right" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></div>
+
+      <h2 class="section-title" id="sectionTitle">Section Title</h2>
+      <div class="notice">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        Important: The video below is a playlist of 5 videos. Please watch them all before moving to the next section!
+      </div>
+
+      <div class="video-container">
+        <iframe
+          id="playlistFrame"
+          src=""
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
     <div style="text-align: center;">
       <button id="testButton" class="btn">Take Certification Test</button>
     </div>
 
     <div id="formContainer">
-      <!-- HeyForm Embed (hidden until button click) -->
       <div
         class="heyform"
         data-heyform-id="YOUR_FORM_ID"
@@ -85,15 +143,40 @@
     </div>
   </div>
 
-  <!-- HeyForm script -->
+  <!-- HeyForm embed script -->
   <script src="https://my.heyform.net/embed"></script>
   <script>
+    // Define your sections here
+    const playlists = [
+      { title: "Section 1: Safety Basics",          id: "PLG0DGUHeVSlY4zgtv--3KrABC71q5ib8M" },
+      { title: "Section 2: Proper Lifting Techniques", id: "ANOTHER_PLAYLIST_ID_2" },
+      { title: "Section 3: Equipment & Tools",        id: "ANOTHER_PLAYLIST_ID_3" }
+      // …add more as needed
+    ];
+
+    let current = 0;
+    const titleEl   = document.getElementById('sectionTitle');
+    const frameEl   = document.getElementById('playlistFrame');
+    const prevBtn   = document.getElementById('prevBtn');
+    const nextBtn   = document.getElementById('nextBtn');
+
+    function updateSection() {
+      const { title, id } = playlists[current];
+      titleEl.textContent = title;
+      frameEl.src = `https://www.youtube.com/embed/videoseries?list=${id}`;
+      prevBtn.style.visibility = current === 0 ? 'hidden' : 'visible';
+      nextBtn.style.visibility = current === playlists.length - 1 ? 'hidden' : 'visible';
+    }
+
+    prevBtn.addEventListener('click', () => { if (current>0) { current--; updateSection(); } });
+    nextBtn.addEventListener('click', () => { if (current<playlists.length-1) { current++; updateSection(); } });
+
+    updateSection();
+
+    // show HeyForm on test button click
     document.getElementById('testButton').addEventListener('click', function() {
-      // show the form
       document.getElementById('formContainer').style.display = 'block';
-      // scroll to it
       document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
-      // hide the button
       this.style.display = 'none';
     });
   </script>
