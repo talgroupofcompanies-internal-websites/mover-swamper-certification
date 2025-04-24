@@ -19,14 +19,10 @@
       padding: 0 20px;
     }
     h1 {
-      text-align: center;
-      color: #004AAD;
-      margin-bottom: 10px;
+      text-align: center; color: #004AAD; margin-bottom: 10px;
     }
     p.intro {
-      text-align: center;
-      margin-bottom: 30px;
-      line-height: 1.6;
+      text-align: center; margin-bottom: 30px; line-height: 1.6;
     }
 
     /* hide the radios */
@@ -36,74 +32,78 @@
       pointer-events: none;
     }
 
-    /* the flex wrapper for arrows + slide */
+    /* wrapper with 70px left/right padding for arrows */
     .video-slider-wrapper {
-      display: flex;
-      align-items: center;       /* centers arrows to video mid-height */
-      justify-content: center;
-      gap: 20px;                  /* 20px space from each side */
-      width: 100%;
+      position: relative;
+      padding: 0 70px;
       margin-bottom: 40px;
     }
 
-    /* each “slide” panel */
+    /* slides are stacked, only one shows */
     .slide {
       display: none;
-      flex: 1;
-      max-width: 100%;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
-    /* show the right slide */
     #slide1:checked ~ .video-slider-wrapper .slide1,
     #slide2:checked ~ .video-slider-wrapper .slide2,
     #slide3:checked ~ .video-slider-wrapper .slide3 {
-      display: flex;
+      display: block;
     }
 
-    /* placeholder arrows (all hidden by default) */
-    .arrow {
-      display: none;
+    /* absolute arrows */
+    .video-slider-wrapper label.prev,
+    .video-slider-wrapper label.next {
+      position: absolute;
+      top: 50%; 
+      transform: translateY(-50%);
       width: 50px; height: 50px;
       background: #004AAD;
       color: #fff;
       border-radius: 50%;
+      display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       transition: background 0.2s;
     }
-    .arrow:hover { background: #00337A; }
+    .video-slider-wrapper label.prev:hover,
+    .video-slider-wrapper label.next:hover {
+      background: #00337A;
+    }
+    .video-slider-wrapper label.prev { left: 20px; }
+    .video-slider-wrapper label.next { right: 20px; }
 
-    /* show only the correct arrows per slide */
-    #slide1:checked ~ .video-slider-wrapper .prev1,
-    #slide1:checked ~ .video-slider-wrapper .next1 {
-      display: flex;
+    /* show only the arrow matching the active slide */
+    /* prev arrows */
+    #slide1:checked ~ .video-slider-wrapper label.prev[for="slide1"],
+    #slide2:checked ~ .video-slider-wrapper label.prev[for="slide2"],
+    #slide3:checked ~ .video-slider-wrapper label.prev[for="slide3"] {
+      visibility: visible;
     }
-    #slide2:checked ~ .video-slider-wrapper .prev2,
-    #slide2:checked ~ .video-slider-wrapper .next2 {
-      display: flex;
+    /* next arrows */
+    #slide1:checked ~ .video-slider-wrapper label.next[for="slide1"],
+    #slide2:checked ~ .video-slider-wrapper label.next[for="slide2"],
+    #slide3:checked ~ .video-slider-wrapper label.next[for="slide3"] {
+      visibility: visible;
     }
-    #slide3:checked ~ .video-slider-wrapper .prev3,
-    #slide3:checked ~ .video-slider-wrapper .next3 {
-      display: flex;
-    }
-
-    /* hide the dummy icon on slide 1 and slide 3 */
-    #slide1:checked ~ .video-slider-wrapper .prev1 i,
-    #slide3:checked ~ .video-slider-wrapper .next3 i {
+    /* hide all arrows by default */
+    .video-slider-wrapper label.prev,
+    .video-slider-wrapper label.next {
       visibility: hidden;
     }
 
-    /* each arrow’s “for” determines navigation; CSS handles spacing */
+    /* make slide-1 prev and slide-3 next invisible placeholder */
+    #slide1:checked ~ .video-slider-wrapper label.prev[for="slide1"] i,
+    #slide3:checked ~ .video-slider-wrapper label.next[for="slide3"] i {
+      visibility: hidden;
+    }
+    /* circle stays because we used visibility, not display */
+
     /* section title & notice inside each slide */
     .slide h2 {
+      text-align: center;
       color: #004AAD;
       margin-bottom: 10px;
-      text-align: center;
     }
     .slide .notice {
       display: flex;
@@ -116,12 +116,10 @@
       margin-bottom: 20px;
       border-radius: 4px;
       justify-content: center;
-      width: 100%;
-      box-sizing: border-box;
     }
     .slide .notice i { color: #004AAD; }
 
-    /* responsive video box */
+    /* video container */
     .video-container {
       position: relative;
       width: 100%;
@@ -138,7 +136,7 @@
       border: none;
     }
 
-    /* test button */
+    /* test button + form */
     .btn {
       display: inline-block;
       background: #004AAD;
@@ -163,18 +161,22 @@
   <div class="container">
     <h1>Mover / Swamper Certification Test</h1>
     <p class="intro">
-      Welcome! To earn your certification, watch each full video playlist below (5 videos each), then click “Take Certification Test.”  
+      Welcome! To earn your certification, watch each full video playlist below (5 videos each), then click “Take Certification Test.”<br>
       You must score 80% or higher.
     </p>
 
-    <!-- slide-tracker radios -->
+    <!-- radios to track slides -->
     <input type="radio" name="slider" id="slide1" checked>
     <input type="radio" name="slider" id="slide2">
     <input type="radio" name="slider" id="slide3">
 
     <div class="video-slider-wrapper">
-      <!-- slide 1 group -->
-      <label for="slide1" class="arrow prev1"><i class="fa-solid fa-chevron-left"></i></label>
+      <!-- prev arrows for each slide -->
+      <label for="slide1" class="prev"><i class="fa-solid fa-chevron-left"></i></label>
+      <label for="slide2" class="prev"><i class="fa-solid fa-chevron-left"></i></label>
+      <label for="slide3" class="prev"><i class="fa-solid fa-chevron-left"></i></label>
+
+      <!-- slides -->
       <div class="slide slide1">
         <h2>Section 1: Safety Basics</h2>
         <div class="notice">
@@ -189,10 +191,6 @@
           </iframe>
         </div>
       </div>
-      <label for="slide2" class="arrow next1"><i class="fa-solid fa-chevron-right"></i></label>
-
-      <!-- slide 2 group -->
-      <label for="slide1" class="arrow prev2"><i class="fa-solid fa-chevron-left"></i></label>
       <div class="slide slide2">
         <h2>Section 2: Proper Lifting Techniques</h2>
         <div class="notice">
@@ -207,10 +205,6 @@
           </iframe>
         </div>
       </div>
-      <label for="slide3" class="arrow next2"><i class="fa-solid fa-chevron-right"></i></label>
-
-      <!-- slide 3 group -->
-      <label for="slide2" class="arrow prev3"><i class="fa-solid fa-chevron-left"></i></label>
       <div class="slide slide3">
         <h2>Section 3: Equipment & Tools</h2>
         <div class="notice">
@@ -225,10 +219,14 @@
           </iframe>
         </div>
       </div>
-      <label for="slide3" class="arrow next3"><i class="fa-solid fa-chevron-right"></i></label>
+
+      <!-- next arrows for each slide -->
+      <label for="slide1" class="next"><i class="fa-solid fa-chevron-right"></i></label>
+      <label for="slide2" class="next"><i class="fa-solid fa-chevron-right"></i></label>
+      <label for="slide3" class="next"><i class="fa-solid fa-chevron-right"></i></label>
     </div>
 
-    <div style="text-align: center;">
+    <div style="text-align:center">
       <button id="testButton" class="btn">Take Certification Test</button>
     </div>
     <div id="formContainer">
@@ -244,6 +242,7 @@
   <!-- HeyForm embed script -->
   <script src="https://my.heyform.net/embed"></script>
   <script>
+    // reveal form on click
     document.getElementById('testButton').addEventListener('click', function() {
       document.getElementById('formContainer').style.display = 'block';
       document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
