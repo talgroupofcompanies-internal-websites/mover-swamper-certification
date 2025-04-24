@@ -29,43 +29,81 @@
       line-height: 1.6;
     }
 
-    /* hide radios */
+    /* hide the radios */
     input[name="slider"] {
       position: absolute;
       opacity: 0;
       pointer-events: none;
     }
 
-    /* slider wrapper */
+    /* the flex wrapper for arrows + slide */
     .video-slider-wrapper {
       display: flex;
-      align-items: center;
+      align-items: center;       /* centers arrows to video mid-height */
       justify-content: center;
-      gap: 20px; /* space between arrows & slide */
+      gap: 20px;                  /* 20px space from each side */
       width: 100%;
       margin-bottom: 40px;
     }
 
-    /* slide panels */
+    /* each “slide” panel */
     .slide {
       display: none;
-      flex: 1;                /* grow to fill between arrows */
+      flex: 1;
       max-width: 100%;
       box-sizing: border-box;
-      text-align: center;
-    }
-    #slide1:checked ~ .video-slider-wrapper .slide1,
-    #slide2:checked ~ .video-slider-wrapper .slide2,
-    #slide3:checked ~ .video-slider-wrapper .slide3 {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+    /* show the right slide */
+    #slide1:checked ~ .video-slider-wrapper .slide1,
+    #slide2:checked ~ .video-slider-wrapper .slide2,
+    #slide3:checked ~ .video-slider-wrapper .slide3 {
+      display: flex;
+    }
 
+    /* placeholder arrows (all hidden by default) */
+    .arrow {
+      display: none;
+      width: 50px; height: 50px;
+      background: #004AAD;
+      color: #fff;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: background 0.2s;
+    }
+    .arrow:hover { background: #00337A; }
+
+    /* show only the correct arrows per slide */
+    #slide1:checked ~ .video-slider-wrapper .prev1,
+    #slide1:checked ~ .video-slider-wrapper .next1 {
+      display: flex;
+    }
+    #slide2:checked ~ .video-slider-wrapper .prev2,
+    #slide2:checked ~ .video-slider-wrapper .next2 {
+      display: flex;
+    }
+    #slide3:checked ~ .video-slider-wrapper .prev3,
+    #slide3:checked ~ .video-slider-wrapper .next3 {
+      display: flex;
+    }
+
+    /* hide the dummy icon on slide 1 and slide 3 */
+    #slide1:checked ~ .video-slider-wrapper .prev1 i,
+    #slide3:checked ~ .video-slider-wrapper .next3 i {
+      visibility: hidden;
+    }
+
+    /* each arrow’s “for” determines navigation; CSS handles spacing */
     /* section title & notice inside each slide */
     .slide h2 {
       color: #004AAD;
       margin-bottom: 10px;
+      text-align: center;
     }
     .slide .notice {
       display: flex;
@@ -77,15 +115,13 @@
       font-weight: 600;
       margin-bottom: 20px;
       border-radius: 4px;
+      justify-content: center;
       width: 100%;
       box-sizing: border-box;
-      justify-content: center;
     }
-    .slide .notice i {
-      color: #004AAD;
-    }
+    .slide .notice i { color: #004AAD; }
 
-    /* video container */
+    /* responsive video box */
     .video-container {
       position: relative;
       width: 100%;
@@ -102,37 +138,7 @@
       border: none;
     }
 
-    /* arrows, hidden by default */
-    .arrow {
-      width: 50px; height: 50px;
-      background: #004AAD;
-      color: #fff;
-      border-radius: 50%;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      transition: background 0.2s;
-    }
-    .arrow:hover { background: #00337A; }
-
-    /* show only the correct arrows per slide */
-    #slide1:checked ~ .video-slider-wrapper .next1,
-    #slide2:checked ~ .video-slider-wrapper .prev2,
-    #slide2:checked ~ .video-slider-wrapper .next2,
-    #slide3:checked ~ .video-slider-wrapper .prev3 {
-      display: flex;
-    }
-
-    /* arrow positions */
-    .next1 { order: 1; }
-    .prev2 { order: 0; }
-    .next2 { order: 2; }
-    .prev3 { order: 1; }
-    /* we rely on flex order + gap to place them correctly */
-
-    /* test button + form */
+    /* test button */
     .btn {
       display: inline-block;
       background: #004AAD;
@@ -161,19 +167,19 @@
       You must score 80% or higher.
     </p>
 
-    <!-- hidden radios -->
+    <!-- slide-tracker radios -->
     <input type="radio" name="slider" id="slide1" checked>
     <input type="radio" name="slider" id="slide2">
     <input type="radio" name="slider" id="slide3">
 
     <div class="video-slider-wrapper">
-      <!-- slide 1 arrows and panel -->
-      <label for="slide2" class="arrow next1"><i class="fa-solid fa-chevron-right"></i></label>
+      <!-- slide 1 group -->
+      <label for="slide1" class="arrow prev1"><i class="fa-solid fa-chevron-left"></i></label>
       <div class="slide slide1">
         <h2>Section 1: Safety Basics</h2>
         <div class="notice">
           <i class="fa-solid fa-triangle-exclamation"></i>
-          Important: Playlist of 5 videos. Watch all before moving on!
+          Important: This is a playlist of 5 videos. Please watch them all before moving on!
         </div>
         <div class="video-container">
           <iframe
@@ -183,15 +189,15 @@
           </iframe>
         </div>
       </div>
+      <label for="slide2" class="arrow next1"><i class="fa-solid fa-chevron-right"></i></label>
 
-      <!-- slide 2 -->
+      <!-- slide 2 group -->
       <label for="slide1" class="arrow prev2"><i class="fa-solid fa-chevron-left"></i></label>
-      <label for="slide3" class="arrow next2"><i class="fa-solid fa-chevron-right"></i></label>
       <div class="slide slide2">
         <h2>Section 2: Proper Lifting Techniques</h2>
         <div class="notice">
           <i class="fa-solid fa-triangle-exclamation"></i>
-          Important: Playlist of 5 videos. Watch all before moving on!
+          Important: This is a playlist of 5 videos. Please watch them all before moving on!
         </div>
         <div class="video-container">
           <iframe
@@ -201,14 +207,15 @@
           </iframe>
         </div>
       </div>
+      <label for="slide3" class="arrow next2"><i class="fa-solid fa-chevron-right"></i></label>
 
-      <!-- slide 3 -->
+      <!-- slide 3 group -->
       <label for="slide2" class="arrow prev3"><i class="fa-solid fa-chevron-left"></i></label>
       <div class="slide slide3">
         <h2>Section 3: Equipment & Tools</h2>
         <div class="notice">
           <i class="fa-solid fa-triangle-exclamation"></i>
-          Important: Playlist of 5 videos. Watch all before moving on!
+          Important: This is a playlist of 5 videos. Please watch them all before moving on!
         </div>
         <div class="video-container">
           <iframe
@@ -218,6 +225,7 @@
           </iframe>
         </div>
       </div>
+      <label for="slide3" class="arrow next3"><i class="fa-solid fa-chevron-right"></i></label>
     </div>
 
     <div style="text-align: center;">
@@ -233,7 +241,7 @@
     </div>
   </div>
 
-  <!-- HeyForm embed -->
+  <!-- HeyForm embed script -->
   <script src="https://my.heyform.net/embed"></script>
   <script>
     document.getElementById('testButton').addEventListener('click', function() {
